@@ -13,36 +13,36 @@
         }
 
         // define contracts for basic fetch and mutate functionality
-        abstract public function getItems();
-        abstract public function getItem($key);
-        abstract public function addItem($key, $value);
-        abstract public function deleteItem($key);
+        abstract public function getActivities();
+        abstract public function getActivity($key);
+        abstract public function addActivity($key, $value);
+        abstract public function deleteActivity($key);
     }
 
     class ActivityImpl extends Activity {
-        public function getItems() {
+        public function getActivities() {
             return $this->data;
         }
 
-        public function getItem($key) {
+        public function getActivity($key) {
             return $this->data[$key];
         }
 
-        public function addItem($key, $value) {
+        public function addActivity($key, $value) {
             $this->data[$key] = $value;
             return $this->data;
         }
 
-        public function deleteItem($key){
+        public function deleteActivity($key){
             unset($this->data[$key]);
             return $this->data;
         }
     }
 
-    $sampleData = array("gavin" => 25, "richard" => 24, "dinesh" => 35);
+    $sampleData = array("eating" => "daily", "climbing" => "twice yearly", "coding" => "daily");
     $act = new ActivityImpl($sampleData);
-    // print_r($act->addItem("jinyang", 22));
-    // print_r($act->deleteItem("jinyang"));
-    // print_r($act->getItem("gavin"));
-    // print_r($act->getItems());
+    print_r($act->addActivity("walking", "thrice weekly"));
+    print_r($act->deleteActivity("climbing"));
+    print_r($act->getActivity("coding"));
+    print_r($act->getActivities());
 ?>
