@@ -12,15 +12,21 @@
             $this->data = $data;
         }
 
+        public function printData(){
+            foreach($this->data as $item => $value){
+                echo "{$item} - {$value} \n";
+            }
+        }
+
         // define contracts for basic fetch and mutate functionality
-        abstract public function getActivities();
+        abstract public function getActivities() : iterable;
         abstract public function getActivity($key);
         abstract public function addActivity($key, $value);
-        abstract public function deleteActivity($key);
+        abstract public function deleteActivity($key): iterable;
     }
 
     class ActivityImpl extends Activity {
-        public function getActivities() {
+        public function getActivities(): iterable {
             return $this->data;
         }
 
@@ -33,7 +39,7 @@
             return $this->data;
         }
 
-        public function deleteActivity($key){
+        public function deleteActivity($key): iterable {
             unset($this->data[$key]);
             return $this->data;
         }
@@ -41,8 +47,9 @@
 
     $sampleData = array("eating" => "daily", "climbing" => "twice yearly", "coding" => "daily");
     $act = new ActivityImpl($sampleData);
-    print_r($act->addActivity("walking", "thrice weekly"));
-    print_r($act->deleteActivity("climbing"));
-    print_r($act->getActivity("coding"));
-    print_r($act->getActivities());
+    $act->addActivity("walking", "thrice weekly");
+    // print_r($act->deleteActivity("climbing"));
+    // print_r($act->getActivity("coding"));
+    // print_r($act->getActivities());
+    // $act->printData();
 ?>
