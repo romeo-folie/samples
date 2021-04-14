@@ -26,8 +26,10 @@ const mergeArrays = function (array1, array2){
 const mergeArrays2 = function (array1, array2){
     const resArray = [];
 
+    // use lengths to figure out which one is longer and which one is shorter 
+
     const longerArray = array1.length > array2.length ? array1 : array2;
-    const shorterArrayLength = longerArray === array1 ? array2.length : array1.length;
+    const shorterArrayLength = Math.min(array1.length, array2.length);
     
     for(let i = 0; i < shorterArrayLength; i++){
         resArray.push(array1[i])
