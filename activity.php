@@ -1,15 +1,18 @@
 <?php
+    require_once("vendor/autoload.php");
+
     /* 
     Model an abstract Activity class that allows mutation and fetching of an Activity resource from a data store, 
     your class should define contracts for basic fetch and mutate functionality. 
     Then define an implementation of the abstraction. 
+    Use a Map as your data store
     */
 
     abstract class Activity {
-        public $data;
+        public $data = [];
 
         public function __construct($data){
-            $this->data = $data;
+            $this->data = new \Ds\Map($data);
         }
 
         public function printData(){
@@ -19,37 +22,31 @@
         }
 
         // define contracts for basic fetch and mutate functionality
-        abstract public function getActivities() : iterable;
-        abstract public function getActivity($key);
-        abstract public function addActivity($key, $value);
-        abstract public function deleteActivity($key): iterable;
+        abstract public function get() : Ds\Sequence;
+        abstract public function add($key, $value);
+        abstract public function delete($key) : bool;
     }
 
     class ActivityImpl extends Activity {
-        public function getActivities(): iterable {
-            return $this->data;
+        public function get() : Ds\Sequence {
+            return $this->data->pairs();
         }
 
-        public function getActivity($key) {
+        public function add($key, $value) {
+            $this->data[$key] = $value;
             return $this->data[$key];
         }
 
-        public function addActivity($key, $value) {
-            $this->data[$key] = $value;
-            return $this->data;
-        }
-
-        public function deleteActivity($key): iterable {
+        public function delete($key) : bool {
             unset($this->data[$key]);
-            return $this->data;
+            return $this->data->hasKey($key) ? false : true;
         }
     }
 
     $sampleData = array("eating" => "daily", "climbing" => "twice yearly", "coding" => "daily");
     $act = new ActivityImpl($sampleData);
-    $act->addActivity("walking", "thrice weekly");
-    // print_r($act->deleteActivity("climbing"));
-    // print_r($act->getActivity("coding"));
-    // print_r($act->getActivities());
+    // print_r($act->add("walking", "thrice weekly"));
+    // var_dump($act->delete("climbing"));
+    // var_dump($act->get());
     // $act->printData();
 ?>
