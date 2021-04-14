@@ -43,7 +43,11 @@
         }
 
         public function delete($key) : bool {
-            $this->data->remove($key);
+            try{
+                $this->data->remove($key);
+            } catch (Exception $e){
+                return false;
+            }
             return $this->data->hasKey($key);
         }
     }
@@ -51,7 +55,7 @@
     $sampleData = array("eating" => "daily", "climbing" => "twice yearly", "coding" => "daily");
     $act = new ActivityImpl($sampleData);
     // print_r($act->add("walking", "thrice weekly"));
-    // var_dump($act->delete("climbing"));
+    var_dump($act->delete("climbing"));
     // print_r($act->get("coding"));
     // print_r($act->all());
     // $act->printData();
