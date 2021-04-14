@@ -32,8 +32,7 @@ const mergeArrays2 = function (array1, array2){
     const shorterArrayLength = Math.min(array1.length, array2.length);
     
     for(let i = 0; i < shorterArrayLength; i++){
-        resArray.push(array1[i])
-        resArray.push(array2[i])
+        resArray.push(array1[i], array2[i])
     }
 
     //concatenate the rest of the long array
