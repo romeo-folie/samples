@@ -22,7 +22,23 @@ const mergeArrays = function (array1, array2){
     return resArray;
 }
 
+// more efficient solution
+const mergeArrays2 = function (array1, array2){
+    const resArray = [];
+
+    const longerArray = array1.length > array2.length ? array1 : array2;
+    const shorterArrayLength = longerArray === array1 ? array2.length : array1.length;
+    
+    for(let i = 0; i < shorterArrayLength; i++){
+        resArray.push(array1[i])
+        resArray.push(array2[i])
+    }
+
+    //concatenate the rest of the long array
+    return resArray.concat(longerArray.slice(shorterArrayLength))
+}
+
 const A = [1, 3, 5, 7, 'c']
 const B = ['a', 4, 6, 'b', 10, 12, 14]
-console.log(mergeArrays(A,B))
+console.log(mergeArrays2(A,B))
 
