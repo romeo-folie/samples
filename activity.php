@@ -9,15 +9,15 @@
     */
 
     abstract class Activity {
-        public $data = [];
+        protected $data = [];
 
         public function __construct($data){
             $this->data = new \Ds\Map($data);
         }
 
         public function printData(){
-            foreach($this->data as $item => $value){
-                echo "{$item} - {$value} \n";
+            foreach($this->data as $key => $value){
+                echo "{$key} - {$value} \n";
             }
         }
 
